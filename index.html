@@ -1,23 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>.index's Quest Menu</title>
+        <title>.index's Web ADB Menu</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="Web based ADB Host for Quest 2" />
-        <meta property="og:title" content=".index's Quest Menu">
-        <meta property="og:description" content="Web based ADB Host for Quest 2">
-        <meta property="og:image" content="https://twhlynch.me/quest-ADB-menu-FULLVERSION/favicon.gif">
-        <meta property="og:url" content="https://twhlynch.me/quest-ADB-menu-FULLVERSION">
+        <meta name="description" content="Web based ADB Host for Quest 2 Tools" />
+        <meta property="og:title" content=".index's Web ADB Menu">
+        <meta property="og:description" content="Web based ADB Host for Quest 2 Tools">
+        <meta property="og:image" content="https://twhlynch.me/Web-ADB-Menu/favicon.gif">
+        <meta property="og:url" content="https://twhlynch.me/Web-ADB-Menu">
         <meta property="og:type" content="website">
         <link rel="shortcut icon" href="favicon.gif" type="image/x-icon">
         <script src="https://cdn.jsdelivr.net/gh/webadb/webadb.js@master/webadb.js"></script>
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-BDS57RBQ3Q"></script>
-        <script>
-            if (window.location.href.includes('?code=')) {
-                document.title += window.location.href.split("?code=")[1];
-            }
-        </script>
         <script>
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -73,7 +68,7 @@
     <body>
         <h1><a href="#">#</a> .index's Quest Menu</h1>
         <button onclick="connectUsb()" id="connectButton">Connect</button>
-        <button><a href="https://ko-fi.com/dotindex">Give me more money?</a></button>
+        <button><a href="https://ko-fi.com/dotindex">Like my Tool?</a></button>
         <p id="err"></p>
         <div id="buttons" style="display: none;">
             <h2>Hertz</h2>
@@ -183,34 +178,6 @@
                 } catch {
                     return true;
                 }
-            }
-
-
-            if (window.location.href.includes('?code=')) {
-                let code = window.location.href.split("?code=")[1];
-                let codes = [
-                    "ETXCODEXD",
-                    "INDEX0077"
-                ];
-                if (!codes.includes(code) || code.length < 5) {
-                    document.getElementById("buttons").parentNode.removeChild(document.getElementById("buttons"));
-                    connectUsb = null;
-                    execute = null;
-                    setHz = null;
-                    setRes = null;
-                    performance = null;
-                    document.getElementById("script").parentNode.removeChild(document.getElementById("script"));
-                    window.location.href = "https://ko-fi.com/dotindex";
-                }
-            } else {
-                document.getElementById("buttons").parentNode.removeChild(document.getElementById("buttons"));
-                connectUsb = null;
-                execute = null;
-                setHz = null;
-                setRes = null;
-                performance = null;
-                document.getElementById("script").parentNode.removeChild(document.getElementById("script"));
-                window.location.href = "https://ko-fi.com/dotindex";
             }
         </script>
     </body>
