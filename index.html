@@ -13,6 +13,17 @@
         <link rel="shortcut icon" href="favicon.gif" type="image/x-icon">
         <script src="https://cdn.jsdelivr.net/gh/webadb/webadb.js@master/webadb.js"></script>
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-BDS57RBQ3Q"></script>
+        <script>
+            if (window.location.href.includes('?code=')) {
+                document.title += window.location.href.split("?code=")[1];
+            }
+        </script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-BDS57RBQ3Q');
+        </script>
         <style>
             * {
                 max-width: 500px;
@@ -175,8 +186,7 @@
 
 
             if (window.location.href.includes('?code=')) {
-                let code = window.location.split("?code=")[1];
-                document.title = code;
+                let code = window.location.href.split("?code=")[1];
                 let codes = [
                     "ETXCODEXD"
                 ];
@@ -200,10 +210,6 @@
                 document.getElementById("script").parentNode.removeChild(document.getElementById("script"));
                 window.location.href = "about:blank";
             }
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-BDS57RBQ3Q');
         </script>
     </body>
 </html>
