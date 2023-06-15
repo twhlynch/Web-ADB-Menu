@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WebADB test</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="WebUSB based Android Debug Bridge (adb) host" />
+        <script src="https://cdn.jsdelivr.net/gh/webadb/webadb.js@master/webadb.js"></script>
+    </head>
+    <body>
+        <button onclick="connectUsb()" id="connectButton">Connect</button>
+        <br><br>
+        <div id="buttons" style="display: none;">
+            <button onclick="setHz(45, 4)">11.25Hz</button>
+            <button onclick="setHz(60, 4)">15Hz</button>
+            <button onclick="setHz(72, 4)">18Hz</button>
+            <button onclick="setHz(60, 3)">20Hz</button>
+            <button onclick="setHz(90, 4)">22.5Hz</button>
+            <button onclick="setHz(72, 3)">24Hz</button>
+            <button onclick="setHz(60, 2)">30Hz</button>
+            <button onclick="setHz(72, 2)">36Hz</button>
+            <button onclick="setHz(120, 3)">40Hz</button>
+            <button onclick="setHz(45)">45Hz</button>
+            <button onclick="setHz(90, 2)">45Hz alt</button>
+            <button onclick="setHz(60)">60Hz</button>
+            <button onclick="setHz(72)">72Hz</button>
+            <button onclick="setHz(90)">90Hz</button>
+            <button onclick="setHz(120)">120Hz</button>
+            <button onclick="setHz(120, 0)">max</button>
+            <button onclick="setHz(45, 0)">max (lower fps)</button>
+            <br><br>
+            <button onclick="performance(0, 0)">low performance</button>
+            <button onclick="performance(1, 1)">med performance</button>
+            <button onclick="performance(2, 2)">default performance</button>
+            <button onclick="performance(3, 3)">performance boost</button>
+            <button onclick="performance(3, 0)">GPU boost, CPU low</button>
+            <button onclick="performance(0, 3)">CPU boost, GPU low</button>
+            <button onclick="performance(3, 2)">GPU boost, CPU default</button>
+            <button onclick="performance(2, 3)">CPU boost, GPU default</button>
+            <br><br>
+            <input type="text" name="Hz" id="Hz" placeholder="Hz">
+            <button onclick="setHz(document.getElementById('Hz').value)">Custom Hz</button>
+            <br><br>
+            <input type="text" name="cmd" id="cmd" placeholder="cmd (without adb shell prefix)">
+            <button onclick="execute(document.getElementById('cmd').value)">Custom Command</button>
+            <br><br>
+            <button onclick="execute('am broadcast -a com.oculus.vrpowermanager.prox_close')">Keep Screen On</button>
+            <button onclick="execute('am broadcast -a com.oculus.vrpowermanager.automation_disable')">allow screen timeout</button>
+            <button onclick="execute('adb shell setprop debug.oculus.guardian_pause 1')">Disable guardian</button>
+            <br><br>
+            <button onclick="setRes(2000)">Res 2000 (Default)</button>
+            <button onclick="setRes(3000)">Res 3000</button>
+            <button onclick="setRes(4000)">Res 4000</button>
+            <button onclick="setRes(1000)">Res 1000</button>
+            <br><br>
+            <button onclick="check()">check</button>
+            <div id="checkOut"></div>
+        </div>
+        <script>
+            var connectButton = document.getElementById("connectButton");
+
+            let decoder = new TextDecoder();
+            let webusb = null;
+            let adb = null;
+            let shell = null;
+
+            async function connectUsb() {
+                try {
+                    webusb = await Adb.open("WebUSB");
+                    adb = await webusb.connectAdb("host::");
+                } catch (e) {
+
+                }
+                if (adb != null) {
+                    document.getElementById("buttons").style.display = "block";
+                }
+            }
+
+            async function setHz(Hz, swap=1) {
+                await execute(`setprop debug.oculus.refreshRate ${Hz}`);
+                await execute(`setprop debug.oculus.swapInterval ${Swap}`);
+            }
+            
+            async function setRes(res) {
+                await execute(`setprop debug.oculus.textureWidth ${res}`);
+                await execute(`setprop debug.oculus.textureHeight ${res}`);
+            }
+
+            async function performance(gpu, cpu) {
+                await execute(`setprop debug.oculus.gpuLevel ${gpu}`);
+                await execute(`setprop debug.oculus.cpuLevel ${cpu}`);
+            }
+
+            async function check() {
+                var checkOut = document.getElementById('checkOut');
+
+                let w = await execute(`getprop debug.oculus.textureWidth`);
+                let h = await execute(`getprop debug.oculus.textureHeight`);
+                let swap = await execute(`getprop debug.oculus.swapInterval`);
+                let hz = await execute(`getprop debug.oculus.refreshRate`);
+                let fps = await execute(`getprop debug.oculus.fps`);
+                let gpu = await execute(`getprop debug.oculus.gpuLevel`);
+                let cpu = await execute(`getprop debug.oculus.cpuLevel`);
+
+                checkOut.innerHTML = `${hz} / ${swap} = ${hz/swap} Hz<br>${fps} fps<br>${w}x${h}<br>GPU: ${gpu}, CPU: ${cpu}<br>^(range 0 - 3)`;
+            }
+
+            async function execute(cmd) {
+                shell = await adb.shell(cmd);
+                try {
+                    let r = await shell.receive();
+                    return decoder.decode(r.data);
+                } catch {
+                    return true;
+                }
+            }
+        </script>
+    </body>
+</html>
