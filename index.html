@@ -148,7 +148,7 @@
 
             async function setHz(Hz, swap=1) {
                 await execute(`setprop debug.oculus.refreshRate ${Hz}`);
-                await execute(`setprop debug.oculus.swapInterval ${Swap}`);
+                await execute(`setprop debug.oculus.swapInterval ${swap}`);
             }
             
             async function setRes(res) {
