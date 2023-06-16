@@ -70,7 +70,26 @@
         <button onclick="connectUsb()" id="connectButton">Connect</button>
         <button><a href="https://ko-fi.com/dotindex">Like my Tool?</a></button>
         <p id="err"></p>
-        <div id="buttons" style="display: none;">
+        <div id="buttons" style="display: auto;">
+            <h2>All In One</h2>
+            <input type="number" name="AIO-refreshRate" id="AIO-refreshRate" placeholder="refreshRate (72)">
+            <br><br>
+            <input type="number" name="AIO-swapInterval" id="AIO-swapInterval" placeholder="swapInterval (1)">
+            <br><br>
+            <input type="number" name="AIO-cpuLevel" id="AIO-cpuLevel" placeholder="cpuLevel (2)">
+            <br><br>
+            <input type="number" name="AIO-gpuLevel" id="AIO-gpuLevel" placeholder="gpuLevel (3)">
+            <br><br>
+            <input type="number" name="AIO-textureWidth" id="AIO-textureWidth" placeholder="textureWidth (2000)">
+            <br><br>
+            <input type="number" name="AIO-textureHeight" id="AIO-textureHeight" placeholder="textureHeight (2000)">
+            <button onclick="AIO()">Set All</button>
+            <p>refreshRate: The number of times the screen refreshes every second (200 Hard Limit)</p>
+            <p>swapInterval: The number of times the screen refreshes before the game refreshes</p>
+            <p>cpuLevel: The CPU power level (-1 - 5)</p>
+            <p>gpuLevel: The GPU power level (-1 - 5)</p>
+            <p>textureWidth: The amount of pixels across the screen (>5000 will lag)</p>
+            <p>textureHeight: The amount of pixels up the screen (>5000 will lag)</p>
             <h2>Hertz</h2>
             <button onclick="setHz(45, 4)">11.25Hz</button>
             <button onclick="setHz(60, 4)">15Hz</button>
@@ -90,7 +109,7 @@
             <button onclick="setHz(120, 0)">max</button>
             <button onclick="setHz(45, 0)">max (lower fps)</button>
             <br><br>
-            <input type="text" name="Hz" id="Hz" placeholder="Hz">
+            <input type="number" name="Hz" id="Hz" placeholder="Hz">
             <button onclick="setHz(document.getElementById('Hz').value)">Custom Hz</button>
             <h2>Performance</h2>
             <button onclick="performance(0, 0)">low performance</button>
@@ -146,14 +165,28 @@
                 await execute(`setprop debug.oculus.swapInterval ${swap}`);
             }
             
-            async function setRes(res) {
+            async function setRes(res, y=false) {
                 await execute(`setprop debug.oculus.textureWidth ${res}`);
+                y ? res = y : {};
                 await execute(`setprop debug.oculus.textureHeight ${res}`);
             }
 
             async function performance(gpu, cpu) {
                 await execute(`setprop debug.oculus.gpuLevel ${gpu}`);
                 await execute(`setprop debug.oculus.cpuLevel ${cpu}`);
+            }
+
+            async function AIO() {
+                let AIOrefreshRate = document.getElementById('AIO-refreshRate').value;
+                let AIOswapInterval = document.getElementById('AIO-swapInterval').value;
+                let AIOcpuLevel = document.getElementById('AIO-cpuLevel').value;
+                let AIOgpuLevel = document.getElementById('AIO-gpuLevel').value;
+                let AIOtextureWidth = document.getElementById('AIO-textureWidth').value;
+                let AIOtextureHeight = document.getElementById('AIO-textureHeight').value;
+
+                await setHz(AIOrefreshRate, AIOswapInterval);
+                await performance(AIOgpuLevel, AIOcpuLevel);
+                setRes(AIOtextureWidth, AIOtextureHeight);
             }
 
             async function check() {
