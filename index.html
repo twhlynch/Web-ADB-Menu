@@ -83,7 +83,9 @@
             <input type="number" name="AIO-textureWidth" id="AIO-textureWidth" placeholder="textureWidth (2000)">
             <br><br>
             <input type="number" name="AIO-textureHeight" id="AIO-textureHeight" placeholder="textureHeight (2000)">
+            <br><br>
             <button onclick="AIO()">Set All</button>
+            <button onclick="CopyAIO()">Copy command</button>
             <p>refreshRate: The number of times the screen refreshes every second (200 Hard Limit)</p>
             <p>swapInterval: The number of times the screen refreshes before the game refreshes</p>
             <p>cpuLevel: The CPU power level (-1 - 5)</p>
@@ -186,7 +188,20 @@
 
                 await setHz(AIOrefreshRate, AIOswapInterval);
                 await performance(AIOgpuLevel, AIOcpuLevel);
-                setRes(AIOtextureWidth, AIOtextureHeight);
+                await setRes(AIOtextureWidth, AIOtextureHeight);
+            }
+
+            async function CopyAIO() {
+                let AIOrefreshRate = document.getElementById('AIO-refreshRate').value;
+                let AIOswapInterval = document.getElementById('AIO-swapInterval').value;
+                let AIOcpuLevel = document.getElementById('AIO-cpuLevel').value;
+                let AIOgpuLevel = document.getElementById('AIO-gpuLevel').value;
+                let AIOtextureWidth = document.getElementById('AIO-textureWidth').value;
+                let AIOtextureHeight = document.getElementById('AIO-textureHeight').value;
+                
+                let command = `adb shell setprop debug.oculus.refreshRate ${AIOrefreshRate} && adb shell setprop debug.oculus.swapInterval ${AIOswapInterval} && adb shell setprop debug.oculus.gpuLevel ${AIOgpuLevel} && adb shell setprop debug.oculus.cpuLevel ${AIOcpuLevel} && adb shell setprop debug.oculus.textureWidth ${AIOtextureWidth} && adb shell setprop debug.oculus.textureHeight ${AIOtextureHeight}`;
+
+                navigator.clipboard.writeText(command);
             }
 
             async function check() {
