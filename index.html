@@ -93,6 +93,10 @@
             <p>textureWidth: The amount of pixels across the screen (>5000 will lag)</p>
             <p>textureHeight: The amount of pixels up the screen (>5000 will lag)</p>
             <h2>Hertz</h2>
+            <button onclick="setHz(60, 60000)">0.001Hz (dont do it)</button>
+            <button onclick="setHz(60, 600)">0.1Hz</button>
+            <button onclick="setHz(60, 60)">1Hz</button>
+            <button onclick="setHz(60, 6)">10Hz</button>
             <button onclick="setHz(45, 4)">11.25Hz</button>
             <button onclick="setHz(60, 4)">15Hz</button>
             <button onclick="setHz(72, 4)">18Hz</button>
@@ -100,16 +104,26 @@
             <button onclick="setHz(90, 4)">22.5Hz</button>
             <button onclick="setHz(72, 3)">24Hz</button>
             <button onclick="setHz(60, 2)">30Hz</button>
-            <button onclick="setHz(72, 2)">36Hz</button>
+            <button onclick="setHz(36)">36Hz</button>
+            <button onclick="setHz(72, 2)">36Hz alt</button>
             <button onclick="setHz(120, 3)">40Hz</button>
             <button onclick="setHz(45)">45Hz</button>
             <button onclick="setHz(90, 2)">45Hz alt</button>
             <button onclick="setHz(60)">60Hz</button>
+            <button onclick="setHz(69)">69Hz</button>
             <button onclick="setHz(72)">72Hz</button>
+            <button onclick="setHz(80)">80Hz</button>
             <button onclick="setHz(90)">90Hz</button>
+            <button onclick="setHz(100)">100Hz</button>
             <button onclick="setHz(120)">120Hz</button>
+            <button onclick="setHz(144)">144Hz</button>
+            <button onclick="setHz(200)">200Hz</button>
+            <button onclick="setHz(200, -1)">200Hz alt</button>
+            <button onclick="setHz(200, -8)">200Hz alt 2</button>
             <button onclick="setHz(120, 0)">max</button>
+            <button onclick="setHz(500, 0)">max 500 version</button>
             <button onclick="setHz(45, 0)">max (lower fps)</button>
+            <button onclick="performance(5, 5)">Hardware not good enough?</button>
             <br><br>
             <input type="number" name="Hz" id="Hz" placeholder="Hz">
             <button onclick="setHz(document.getElementById('Hz').value)">Custom Hz</button>
