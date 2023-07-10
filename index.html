@@ -113,6 +113,7 @@
             <br><br>
             <input type="number" name="Hz" id="Hz" placeholder="Hz">
             <button onclick="setHz(document.getElementById('Hz').value)">Custom Hz</button>
+            <h2>Then click <button onclick="refreshHz()">This</button> or enable <button onclick="autoferesh = true">Auto-refresh</button></h2>
             <h2>Performance</h2>
             <button onclick="performance(0, 0)">low performance</button>
             <button onclick="performance(1, 1)">med performance</button>
@@ -127,10 +128,20 @@
             <button onclick="setRes(3000)">Res 3000</button>
             <button onclick="setRes(4000)">Res 4000</button>
             <button onclick="setRes(1000)">Res 1000</button>
+            <button onclick="setRes(4000, 100)">Res Goofy (4000, 100)</button>
+            <h2>Foveation</h2>
+            <button onclick="setFov(0)">HD (0)</button>
+            <button onclick="setFov(1)">1</button>
+            <button onclick="setFov(2)">2</button>
+            <button onclick="setFov(3)">3</button>
+            <button onclick="setFov(4)">High Foveation (4)</button>
             <h2>Extras</h2>
             <button onclick="execute('am broadcast -a com.oculus.vrpowermanager.prox_close')">Keep Screen On</button>
             <button onclick="execute('am broadcast -a com.oculus.vrpowermanager.automation_disable')">allow screen timeout</button>
             <button onclick="execute('adb shell setprop debug.oculus.guardian_pause 1')">Disable guardian</button>
+            <button onclick="execute('adb shell setprop debug.oculus.experimentalEnabled 1')">Enable experimental settings</button>
+            <button onclick="execute('adb shell setprop debug.oculus.forceChroma 1')">Correct Chromatic Aberration</button>
+            <button onclick="potato()">Potato Recording Mode</button>
             <h2>Custom</h2>
             <input type="text" name="cmd" id="cmd" placeholder="cmd (without adb shell prefix)">
             <button onclick="execute(document.getElementById('cmd').value)">Custom Command</button>
@@ -147,24 +158,34 @@
             let adb = null;
             let shell = null;
 
+            var autoferesh = false;
+
             async function connectUsb() {
                 try {
                     webusb = await Adb.open("WebUSB");
                     adb = await webusb.connectAdb("host::");
                 } catch (e) {
-                    err.innerText = "Error. Hit \"allow\" if prompted on Quest, then try again. If this persists more than 4 times, disable and enable USB debugging.";
+                    err.innerText = "Error. Hit \"allow\" if prompted on Quest, then try again. If this persists more than 4 times, try: \n-Unplug / Plug-in Quest, \n-toggle USB debugging, \n-reload browser, \n-close other ADB programs (SideQuest), \n-Check that adb.exe is not running, \n-restart Quest, \n-restart PC, \n-try another cable, \n-try amother port.";
                 }
                 if (adb != null) {
                     document.getElementById("buttons").style.display = "block";
                     err.innerText = "Success. If menu does not appear, reload page and try again.";
                 } else {
-                    err.innerText = "Error. Hit \"allow\" if prompted on Quest, then try again. If this persists more than 4 times, disable and enable USB debugging.";
+                    err.innerText = "Error. Hit \"allow\" if prompted on Quest, then try again. If this persists more than 4 times, try: \n-Unplug / Plug-in Quest, \n-toggle USB debugging, \n-reload browser, \n-close other ADB programs (SideQuest), \n-Check that adb.exe is not running, \n-restart Quest, \n-restart PC, \n-try another cable, \n-try amother port.";
                 }
             }
 
             async function setHz(Hz, swap=1) {
                 await execute(`setprop debug.oculus.refreshRate ${Hz}`);
                 await execute(`setprop debug.oculus.swapInterval ${swap}`);
+                if (autoferesh) {
+                    await refreshHz();
+                }
+            }
+
+            async function refreshHz() {
+                await execute(`input keyevent KEYCODE_SLEEP`);
+                await execute(`input keyevent KEYCODE_WAKEUP`);
             }
             
             async function setRes(res, y=false) {
@@ -173,9 +194,20 @@
                 await execute(`setprop debug.oculus.textureHeight ${res}`);
             }
 
+            async function setFov(fov) {
+                await execute(`setprop debug.oculus.foveation.level ${fov}`);
+                await execute(`setprop debug.oculus.foveation.dynamic 0`);
+            }
+
             async function performance(gpu, cpu) {
                 await execute(`setprop debug.oculus.gpuLevel ${gpu}`);
                 await execute(`setprop debug.oculus.cpuLevel ${cpu}`);
+            }
+            
+            async function potato() {
+                execute(`setprop debug.oculus.capture.bitrate 1000`);
+                execute(`setprop debug.oculus.capture.height 500`);
+                execute(`setprop debug.oculus.capture.width 500`);
             }
 
             async function AIO() {
