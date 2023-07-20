@@ -149,6 +149,9 @@
             <button onclick="setFov(2)">2</button>
             <button onclick="setFov(3)">3</button>
             <button onclick="setFov(4)">High Foveation (4)</button>
+            <h2>Telemetry</h2>
+            <button onclick="telemetry('disable')">Disable</button>
+            <button onclick="telemetry('enable')">Enable</button>
             <h2>Extras</h2>
             <button onclick="execute('am broadcast -a com.oculus.vrpowermanager.prox_close')">Keep Screen On</button>
             <button onclick="execute('am broadcast -a com.oculus.vrpowermanager.automation_disable')">allow screen timeout</button>
@@ -219,9 +222,18 @@
             }
             
             async function potato() {
-                execute(`setprop debug.oculus.capture.bitrate 1000`);
-                execute(`setprop debug.oculus.capture.height 500`);
-                execute(`setprop debug.oculus.capture.width 500`);
+                await execute(`setprop debug.oculus.capture.bitrate 1000`);
+                await execute(`setprop debug.oculus.capture.height 500`);
+                await execute(`setprop debug.oculus.capture.width 500`);
+            }
+
+            async function telemetry(state) {
+                await execute(`pm ${state} com.oculus.unifiedtelemetry`);
+                await execute(`pm ${state} com.oculus.gatekeeperservice`);
+                await execute(`pm ${state} com.oculus.notification_proxy`);
+                await execute(`pm ${state} com.oculus.bugreporter`);
+                await execute(`pm ${state} com.oculus.os.logcollector`);
+                await execute(`pm ${state} com.oculus.appsafety`);
             }
 
             async function AIO() {
