@@ -1,0 +1,43 @@
+* {
+    max-width: 500px;
+    overflow-x: hidden;
+    font-family: monospace;
+}
+body, html {
+    padding: 1rem;
+    margin: 0;
+    background-color: #011;
+}
+input {
+    width: 60%;
+    border: #077 2px solid;
+    background: #011;
+    color: #077;
+    padding: .5rem;
+    border-radius: 0;
+}
+button {
+    border: #077 2px solid;
+    background: #011;
+    color: #077;
+    padding: .5rem;
+    border-radius: 0;
+    cursor: pointer;
+    margin: 5px;
+}
+h1, h2, h3, p {
+    color: #077
+}
+p {
+    margin-bottom: 0;
+}
+a {
+    color: inherit;
+    text-decoration: none;
+}
+button:hover {
+    background-color: #022;
+}
+*::-webkit-scrollbar {
+    display: none;
+}

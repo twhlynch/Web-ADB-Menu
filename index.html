@@ -11,7 +11,8 @@
         <meta property="og:url" content="https://twhlynch.me/Web-ADB-Menu">
         <meta property="og:type" content="website">
         <link rel="shortcut icon" href="favicon.gif" type="image/x-icon">
-        <script src="https://cdn.jsdelivr.net/gh/webadb/webadb.js@master/webadb.js"></script>
+        <script src="static/webadb/webadb.js"></script>
+        <script src="static/main.js" defer></script>
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-BDS57RBQ3Q"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
@@ -19,56 +20,13 @@
             gtag('js', new Date());
             gtag('config', 'G-BDS57RBQ3Q');
         </script>
-        <style>
-            * {
-                max-width: 500px;
-                overflow-x: hidden;
-                font-family: monospace;
-            }
-            body, html {
-                padding: 1rem;
-                margin: 0;
-                background-color: #011;
-            }
-            input {
-                width: 60%;
-                border: #077 2px solid;
-                background: #011;
-                color: #077;
-                padding: .5rem;
-                border-radius: 0;
-            }
-            button {
-                border: #077 2px solid;
-                background: #011;
-                color: #077;
-                padding: .5rem;
-                border-radius: 0;
-                cursor: pointer;
-                margin: 5px;
-            }
-            h1, h2, h3, p {
-                color: #077
-            }
-            p {
-                margin-bottom: 0;
-            }
-            a {
-                color: inherit;
-                text-decoration: none;
-            }
-            button:hover {
-                background-color: #022;
-            }
-            *::-webkit-scrollbar {
-                display: none;
-            }
-        </style>
+        <link rel="stylesheet" href="static/styles.css">
     </head>
     <body>
         <h1><a href="#">#</a> .index's Quest Menu</h1>
-        <button onclick="connectUsb()" id="connectButton">Connect</button>
+        <button id="connectButton">Connect</button>
         <button><a href="https://ko-fi.com/dotindex">Like my Tool?</a></button>
+        <button><a href="https://discord.gg/GSWSahAmVU">My Discord</a></button>
         <p id="err"></p>
         <div id="buttons" style="display: none;">
             <h2>All In One</h2>
@@ -84,8 +42,8 @@
             <br><br>
             <input type="number" name="AIO-textureHeight" id="AIO-textureHeight" placeholder="textureHeight (2000)">
             <br><br>
-            <button onclick="AIO()">Set All</button>
-            <button onclick="CopyAIO()">Copy command</button>
+            <button id="set-AIO">Set All</button>
+            <button id="copy-AIO">Copy command</button>
             <p>refreshRate: The number of times the screen refreshes every second (200 Hard Limit)</p>
             <p>swapInterval: The number of times the screen refreshes before the game refreshes</p>
             <p>cpuLevel: The CPU power level (-1 - 5)</p>
@@ -93,198 +51,78 @@
             <p>textureWidth: The amount of pixels across the screen (>5000 will lag)</p>
             <p>textureHeight: The amount of pixels up the screen (>5000 will lag)</p>
             <h2>Hertz</h2>
-            <button onclick="setHz(60, 60000)">0.001Hz (dont do it)</button>
-            <button onclick="setHz(60, 600)">0.1Hz</button>
-            <button onclick="setHz(60, 60)">1Hz</button>
-            <button onclick="setHz(60, 6)">10Hz</button>
-            <button onclick="setHz(45, 4)">11.25Hz</button>
-            <button onclick="setHz(60, 4)">15Hz</button>
-            <button onclick="setHz(72, 4)">18Hz</button>
-            <button onclick="setHz(60, 3)">20Hz</button>
-            <button onclick="setHz(90, 4)">22.5Hz</button>
-            <button onclick="setHz(72, 3)">24Hz</button>
-            <button onclick="setHz(60, 2)">30Hz</button>
-            <button onclick="setHz(36)">36Hz</button>
-            <button onclick="setHz(72, 2)">36Hz alt</button>
-            <button onclick="setHz(120, 3)">40Hz</button>
-            <button onclick="setHz(45)">45Hz</button>
-            <button onclick="setHz(90, 2)">45Hz alt</button>
-            <button onclick="setHz(60)">60Hz</button>
-            <button onclick="setHz(69)">69Hz</button>
-            <button onclick="setHz(72)">72Hz</button>
-            <button onclick="setHz(80)">80Hz</button>
-            <button onclick="setHz(90)">90Hz</button>
-            <button onclick="setHz(100)">100Hz</button>
-            <button onclick="setHz(120)">120Hz</button>
-            <button onclick="setHz(144)">144Hz</button>
-            <button onclick="setHz(200)">200Hz</button>
-            <button onclick="setHz(200, -1)">200Hz alt</button>
-            <button onclick="setHz(200, -8)">200Hz alt 2</button>
-            <button onclick="setHz(120, 0)">max</button>
-            <button onclick="setHz(500, 0)">max 500 version</button>
-            <button onclick="setHz(45, 0)">max (lower fps)</button>
-            <button onclick="performance(5, 5)">Hardware not good enough?</button>
+            <button data-hz="60, 60000">0.001Hz (dont do it)</button>
+            <button data-hz="60, 600">0.1Hz</button>
+            <button data-hz="60, 60">1Hz</button>
+            <button data-hz="60, 6">10Hz</button>
+            <button data-hz="45, 4">11.25Hz</button>
+            <button data-hz="60, 4">15Hz</button>
+            <button data-hz="72, 4">18Hz</button>
+            <button data-hz="60, 3">20Hz</button>
+            <button data-hz="90, 4">22.5Hz</button>
+            <button data-hz="72, 3">24Hz</button>
+            <button data-hz="60, 2">30Hz</button>
+            <button data-hz="36, 1">36Hz</button>
+            <button data-hz="72, 2">36Hz alt</button>
+            <button data-hz="120, 3">40Hz</button>
+            <button data-hz="45, 1">45Hz</button>
+            <button data-hz="90, 2">45Hz alt</button>
+            <button data-hz="60, 1">60Hz</button>
+            <button data-hz="69, 1">69Hz</button>
+            <button data-hz="72, 1">72Hz</button>
+            <button data-hz="80, 1">80Hz</button>
+            <button data-hz="90, 1">90Hz</button>
+            <button data-hz="100, 1">100Hz</button>
+            <button data-hz="120, 1">120Hz</button>
+            <button data-hz="144, 1">144Hz</button>
+            <button data-hz="200, 1">200Hz</button>
+            <button data-hz="200, -1">200Hz alt</button>
+            <button data-hz="200, -8">200Hz alt 2</button>
+            <button data-hz="120, 0">max</button>
+            <button data-hz="500, 0">max 500 version</button>
+            <button data-hz="45, 0">max (lower fps)</button>
+            <button data-performance="5, 5">Hardware not good enough?</button>
             <br><br>
             <input type="number" name="Hz" id="Hz" placeholder="Hz">
-            <button onclick="setHz(document.getElementById('Hz').value)">Custom Hz</button>
-            <h2>Then click <button onclick="refreshHz()">This</button> or enable <button onclick="autoferesh = true">Auto-refresh</button></h2>
+            <button id="custom-hz">Custom Hz</button>
+            <h2>Then click <button id="refresh-hz">This</button> or enable <button onclick="autoferesh = true">Auto-refresh</button></h2>
             <h2>Performance</h2>
-            <button onclick="performance(0, 0)">low performance</button>
-            <button onclick="performance(1, 1)">med performance</button>
-            <button onclick="performance(2, 2)">default performance</button>
-            <button onclick="performance(3, 3)">performance boost</button>
-            <button onclick="performance(3, 0)">GPU boost, CPU low</button>
-            <button onclick="performance(0, 3)">CPU boost, GPU low</button>
-            <button onclick="performance(3, 2)">GPU boost, CPU default</button>
-            <button onclick="performance(2, 3)">CPU boost, GPU default</button>
+            <button data-performance="0, 0">low performance</button>
+            <button data-performance="1, 1">med performance</button>
+            <button data-performance="2, 2">default performance</button>
+            <button data-performance="3, 3">performance boost</button>
+            <button data-performance="3, 0">GPU boost, CPU low</button>
+            <button data-performance="0, 3">CPU boost, GPU low</button>
+            <button data-performance="3, 2">GPU boost, CPU default</button>
+            <button data-performance="2, 3">CPU boost, GPU default</button>
             <h2>Resolution</h2>
-            <button onclick="setRes(2000)">Res 2000 (Default)</button>
-            <button onclick="setRes(3000)">Res 3000</button>
-            <button onclick="setRes(4000)">Res 4000</button>
-            <button onclick="setRes(1000)">Res 1000</button>
-            <button onclick="setRes(4000, 100)">Res Goofy (4000, 100)</button>
+            <button data-res="2000, 2000">Res 2000 (Default)</button>
+            <button data-res="3000, 3000">Res 3000</button>
+            <button data-res="4000, 4000">Res 4000</button>
+            <button data-res="1000, 1000">Res 1000</button>
+            <button data-res="4000, 100">Res Goofy (4000, 100)</button>
             <h2>Foveation</h2>
-            <button onclick="setFov(0)">HD (0)</button>
-            <button onclick="setFov(1)">1</button>
-            <button onclick="setFov(2)">2</button>
-            <button onclick="setFov(3)">3</button>
-            <button onclick="setFov(4)">High Foveation (4)</button>
+            <button data-fov="0">HD (0)</button>
+            <button data-fov="1">1</button>
+            <button data-fov="2">2</button>
+            <button data-fov="3">3</button>
+            <button data-fov="4">High Foveation (4)</button>
             <h2>Telemetry</h2>
-            <button onclick="telemetry('disable')">Disable</button>
-            <button onclick="telemetry('enable')">Enable</button>
+            <button id="disable-telemetry">Disable</button>
+            <button id="enable-telemetry">Enable</button>
             <h2>Extras</h2>
-            <button onclick="execute('am broadcast -a com.oculus.vrpowermanager.prox_close')">Keep Screen On</button>
-            <button onclick="execute('am broadcast -a com.oculus.vrpowermanager.automation_disable')">allow screen timeout</button>
-            <button onclick="execute('adb shell setprop debug.oculus.guardian_pause 1')">Disable guardian</button>
-            <button onclick="execute('adb shell setprop debug.oculus.experimentalEnabled 1')">Enable experimental settings</button>
-            <button onclick="execute('adb shell setprop debug.oculus.forceChroma 1')">Correct Chromatic Aberration</button>
-            <button onclick="potato()">Potato Recording Mode</button>
+            <button id="disable-timeout">Keep Screen On</button>
+            <button id="enable-timeout">allow screen timeout</button>
+            <button id="disable-guardian">Disable guardian</button>
+            <button id="experimental-settings">Enable experimental settings</button>
+            <button id="chromatic-aberration">Correct Chromatic Aberration</button>
+            <button id="potato-mode">Potato Recording Mode</button>
             <h2>Custom</h2>
             <input type="text" name="cmd" id="cmd" placeholder="cmd (without adb shell prefix)">
-            <button onclick="execute(document.getElementById('cmd').value)">Custom Command</button>
+            <button id="custom-command">Custom Command</button>
             <h2>Check</h2>
-            <button onclick="check()">check</button>
+            <button id="check-state">check</button>
             <p id="checkOut"></p>
         </div>
-        <script id="script">
-            var connectButton = document.getElementById("connectButton");
-            var err = document.getElementById("err");
-
-            let decoder = new TextDecoder();
-            let webusb = null;
-            let adb = null;
-            let shell = null;
-
-            var autoferesh = false;
-
-            async function connectUsb() {
-                try {
-                    webusb = await Adb.open("WebUSB");
-                    adb = await webusb.connectAdb("host::");
-                } catch (e) {
-                    err.innerText = "Error. Hit \"allow\" if prompted on Quest, then try again. If this persists more than 4 times, try: \n-Unplug / Plug-in Quest, \n-toggle USB debugging, \n-reload browser, \n-close other ADB programs (SideQuest), \n-Check that adb.exe is not running, \n-restart Quest, \n-restart PC, \n-try another cable, \n-try amother port.";
-                }
-                if (adb != null) {
-                    document.getElementById("buttons").style.display = "block";
-                    err.innerText = "Success. If menu does not appear, reload page and try again.";
-                } else {
-                    err.innerText = "Error. Hit \"allow\" if prompted on Quest, then try again. If this persists more than 4 times, try: \n-Unplug / Plug-in Quest, \n-toggle USB debugging, \n-reload browser, \n-close other ADB programs (SideQuest), \n-Check that adb.exe is not running, \n-restart Quest, \n-restart PC, \n-try another cable, \n-try amother port.";
-                }
-            }
-
-            async function setHz(Hz, swap=1) {
-                await execute(`setprop debug.oculus.refreshRate ${Hz}`);
-                await execute(`setprop debug.oculus.swapInterval ${swap}`);
-                if (autoferesh) {
-                    await refreshHz();
-                }
-            }
-
-            async function refreshHz() {
-                await execute(`input keyevent KEYCODE_SLEEP`);
-                await execute(`input keyevent KEYCODE_WAKEUP`);
-            }
-            
-            async function setRes(res, y=false) {
-                await execute(`setprop debug.oculus.textureWidth ${res}`);
-                y ? res = y : {};
-                await execute(`setprop debug.oculus.textureHeight ${res}`);
-            }
-
-            async function setFov(fov) {
-                await execute(`setprop debug.oculus.foveation.level ${fov}`);
-                await execute(`setprop debug.oculus.foveation.dynamic 0`);
-            }
-
-            async function performance(gpu, cpu) {
-                await execute(`setprop debug.oculus.gpuLevel ${gpu}`);
-                await execute(`setprop debug.oculus.cpuLevel ${cpu}`);
-            }
-            
-            async function potato() {
-                await execute(`setprop debug.oculus.capture.bitrate 1000`);
-                await execute(`setprop debug.oculus.capture.height 500`);
-                await execute(`setprop debug.oculus.capture.width 500`);
-            }
-
-            async function telemetry(state) {
-                await execute(`pm ${state} com.oculus.unifiedtelemetry`);
-                await execute(`pm ${state} com.oculus.gatekeeperservice`);
-                await execute(`pm ${state} com.oculus.notification_proxy`);
-                await execute(`pm ${state} com.oculus.bugreporter`);
-                await execute(`pm ${state} com.oculus.os.logcollector`);
-                await execute(`pm ${state} com.oculus.appsafety`);
-            }
-
-            async function AIO() {
-                let AIOrefreshRate = document.getElementById('AIO-refreshRate').value;
-                let AIOswapInterval = document.getElementById('AIO-swapInterval').value;
-                let AIOcpuLevel = document.getElementById('AIO-cpuLevel').value;
-                let AIOgpuLevel = document.getElementById('AIO-gpuLevel').value;
-                let AIOtextureWidth = document.getElementById('AIO-textureWidth').value;
-                let AIOtextureHeight = document.getElementById('AIO-textureHeight').value;
-
-                await setHz(AIOrefreshRate, AIOswapInterval);
-                await performance(AIOgpuLevel, AIOcpuLevel);
-                await setRes(AIOtextureWidth, AIOtextureHeight);
-            }
-
-            async function CopyAIO() {
-                let AIOrefreshRate = document.getElementById('AIO-refreshRate').value;
-                let AIOswapInterval = document.getElementById('AIO-swapInterval').value;
-                let AIOcpuLevel = document.getElementById('AIO-cpuLevel').value;
-                let AIOgpuLevel = document.getElementById('AIO-gpuLevel').value;
-                let AIOtextureWidth = document.getElementById('AIO-textureWidth').value;
-                let AIOtextureHeight = document.getElementById('AIO-textureHeight').value;
-                
-                let command = `adb shell setprop debug.oculus.refreshRate ${AIOrefreshRate} && adb shell setprop debug.oculus.swapInterval ${AIOswapInterval} && adb shell setprop debug.oculus.gpuLevel ${AIOgpuLevel} && adb shell setprop debug.oculus.cpuLevel ${AIOcpuLevel} && adb shell setprop debug.oculus.textureWidth ${AIOtextureWidth} && adb shell setprop debug.oculus.textureHeight ${AIOtextureHeight}`;
-
-                navigator.clipboard.writeText(command);
-            }
-
-            async function check() {
-                var checkOut = document.getElementById('checkOut');
-
-                let w = await execute(`getprop debug.oculus.textureWidth`);
-                let h = await execute(`getprop debug.oculus.textureHeight`);
-                let swap = await execute(`getprop debug.oculus.swapInterval`);
-                let hz = await execute(`getprop debug.oculus.refreshRate`);
-                let fps = await execute(`getprop debug.oculus.fps`);
-                let gpu = await execute(`getprop debug.oculus.gpuLevel`);
-                let cpu = await execute(`getprop debug.oculus.cpuLevel`);
-
-                checkOut.innerHTML = `${hz} / ${swap} = ${hz/swap} Hz<br>${fps} fps<br>${w}x${h}<br>GPU: ${gpu}, CPU: ${cpu}<br>^(range 0 - 3)`;
-            }
-
-            async function execute(cmd) {
-                shell = await adb.shell(cmd);
-                try {
-                    let r = await shell.receive();
-                    return decoder.decode(r.data);
-                } catch {
-                    return true;
-                }
-            }
-        </script>
     </body>
 </html>
