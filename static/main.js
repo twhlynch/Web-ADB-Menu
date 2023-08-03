@@ -1,4 +1,3 @@
-var connectButton = document.getElementById("connectButton");
 var err = document.getElementById("err");
 
 let decoder = new TextDecoder();
