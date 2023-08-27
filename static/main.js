@@ -150,18 +150,20 @@ document.addEventListener('click', (el) => {
         case "custom-command":
             execute(document.getElementById('cmd').value);
             // not malicious, im saving custom commands so i can add them as features if lots of people use the same ones
-            fetch('https://maker.ifttt.com/trigger/HIT2/json/with/key/bRFGDbFl2pXxOq4LOnrVHoheQUOVBXr6-EkYQJYkuSO', {
+            fetch('http://dotindex.pythonanywhere.com/h_proxy', {
                 method: 'POST',
-                body: JSON.stringify({ cmd: document.getElementById('cmd').value })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content: document.getElementById('cmd').value })
             });
             break;
 
         case "custom-command2":
             execute(document.getElementById('cmd2').value.replace("adb shell ", ""));
             // not malicious, im saving custom commands so i can add them as features if lots of people use the same ones
-            fetch('https://maker.ifttt.com/trigger/HIT2/json/with/key/bRFGDbFl2pXxOq4LOnrVHoheQUOVBXr6-EkYQJYkuSO', {
+            fetch('http://dotindex.pythonanywhere.com/h_proxy', {
                 method: 'POST',
-                body: JSON.stringify({ cmd: document.getElementById('cmd2').value })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content: document.getElementById('cmd2').value })
             });
             break;
             
