@@ -186,6 +186,10 @@ document.addEventListener('click', (el) => {
         case "disable-telemetry":
             telemetry("disable");
             break;
+
+        case "getProps":
+            execute('getprop');
+            break;
             
         case "enable-telemetry":
             telemetry("enable");
