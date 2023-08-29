@@ -70,3 +70,11 @@ footer {
     padding: 1rem;
     color: #077;
 }
+#globalLog {
+    border: 1px solid #077;
+    min-height: 1rem;
+    padding: 1rem;
+    color: #077;
+    max-height: 5rem;
+    overflow-y: scroll;
+}

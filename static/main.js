@@ -118,6 +118,7 @@ async function check() {
 
 async function execute(cmd) {
     console.log(cmd);
+    document.getElementById('globalLog').innerText += cmd + '\n';
     shell = await adb.shell(cmd);
     try {
         let r = await shell.receive();
