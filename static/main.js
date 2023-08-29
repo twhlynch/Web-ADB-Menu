@@ -134,6 +134,14 @@ document.addEventListener('click', (el) => {
         case "connectButton":
             connectUsb();
             break;
+
+        case "discordButton":
+            window.open("https://discord.gg/GSWSahAmVU");
+            break;
+
+        case "ko-fiButton":
+            window.open("https://ko-fi.com/dotindex");
+            break;
             
         case "custom-hz":
             setHz(document.getElementById('Hz').value);
