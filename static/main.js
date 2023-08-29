@@ -49,6 +49,11 @@ async function setFov(fov) {
     await execute(`setprop debug.oculus.foveation.dynamic 0`);
 }
 
+async function setFont(font) {
+    await execute(`settings put system font_scale ${font}`);
+    await execute(`settings put system font_size ${font}`);
+}
+
 async function performance(gpu, cpu) {
     await execute(`setprop debug.oculus.gpuLevel ${gpu}`);
     await execute(`setprop debug.oculus.cpuLevel ${cpu}`);
@@ -112,9 +117,11 @@ async function check() {
 }
 
 async function execute(cmd) {
+    console.log(cmd);
     shell = await adb.shell(cmd);
     try {
         let r = await shell.receive();
+        document.getElementById('globalOutput').innerText = decoder.decode(r.data);
         return decoder.decode(r.data);
     } catch {
         return true;
@@ -192,15 +199,15 @@ document.addEventListener('click', (el) => {
             break;
             
         case "disable-guardian":
-            execute('adb shell setprop debug.oculus.guardian_pause 1');
+            execute('setprop debug.oculus.guardian_pause 1');
             break;
             
         case "experimental-settings":
-            execute('adb shell setprop debug.oculus.experimentalEnabled 1');
+            execute('setprop debug.oculus.experimentalEnabled 1');
             break;
             
         case "chromatic-aberration":
-            execute('adb shell setprop debug.oculus.forceChroma 1');
+            execute('setprop debug.oculus.forceChroma 1');
             break;
         
         case "check-state":
@@ -215,6 +222,7 @@ document.addEventListener('click', (el) => {
     let data_performance = el.target.getAttribute('data-performance');
     let data_res = el.target.getAttribute('data-res');
     let data_fov = el.target.getAttribute('data-fov');
+    let data_font = el.target.getAttribute('data-font');
     if (data_hz) {
         data_hz = data_hz.split(',');
         setHz(data_hz[0], data_hz[1])
@@ -226,5 +234,7 @@ document.addEventListener('click', (el) => {
         setRes(data_res[0], data_res[1])
     } else if (data_fov) {
         setFov(data_fov)
+    } else if (data_font) {
+        setFont(data_font)
     }
 });

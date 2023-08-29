@@ -64,3 +64,9 @@ footer {
     width: 100%;
     text-align: center;
 }
+#globalOutput {
+    border: 1px solid #077;
+    min-height: 1rem;
+    padding: 1rem;
+    color: #077;
+}
