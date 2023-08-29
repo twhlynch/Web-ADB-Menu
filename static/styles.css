@@ -1,4 +1,4 @@
-* {
+*:not(html) {
     max-width: 500px;
     overflow-x: hidden;
     font-family: monospace;
@@ -7,6 +7,13 @@ body, html {
     padding: 1rem;
     margin: 0;
     background-color: #011;
+    min-height: calc(100% - 2rem);
+}
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-inline: auto;
 }
 input {
     width: 60%;
@@ -38,6 +45,22 @@ a {
 button:hover {
     background-color: #022;
 }
+#connectButton:hover {
+    border-color: #070;
+    color: #070;
+}
+#ko-fiButton:hover {
+    border-color: #770;
+    color: #770;
+}
+#discordButton:hover {
+    border-color: #70b;
+    color: #70b;
+}
 *::-webkit-scrollbar {
     display: none;
+}
+footer {
+    width: 100%;
+    text-align: center;
 }
