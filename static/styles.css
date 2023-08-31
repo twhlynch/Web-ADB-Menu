@@ -3,10 +3,33 @@
     overflow-x: hidden;
     font-family: monospace;
 }
+html {
+    background-color: #011;
+    background: radial-gradient(
+            105.68% 45.69% at 92.95% 50%,
+            #001 0%,
+            #011 100%
+        ),
+        radial-gradient(
+            103.18% 103.18% at 90.11% 102.39%,
+            #002 0%,
+            #022 100%
+        ),
+        radial-gradient(
+            90.45% 90.45% at 87.84% 9.55%,
+            #011 0%,
+            #022 100%
+        ),
+        linear-gradient(
+            135.66deg,
+            #011 14.89%,
+            #022 74.33%
+        );
+    background-size: cover;
+}
 body, html {
     padding: 1rem;
     margin: 0;
-    background-color: #011;
     min-height: calc(100% - 2rem);
 }
 body {
