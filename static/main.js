@@ -4,6 +4,7 @@ let decoder = new TextDecoder();
 let webusb = null;
 let adb = null;
 let shell = null;
+let sync = null;
 
 var autoferesh = false;
 
@@ -129,6 +130,21 @@ async function execute(cmd) {
     }
 }
 
+async function installAPK() {
+    sync = await adb.sync();
+    let push_file = document.getElementById("apk-input").files[0];
+    let push_dest = `/sdcard/Download/${push_file.name}`;
+    await sync.push(push_file, push_dest, "0644");
+
+    // await execute(`pm install -r -d ${push_dest}`);
+    await execute(`cat ${push_dest} | pm install -S ${push_file.size}`);
+
+    await execute(`rm ${push_dest}`);
+        
+    await sync.quit();
+    sync = null;
+}
+
 document.addEventListener('click', (el) => {
     switch (el.target.id) {
         case "set-AIO":
@@ -137,6 +153,14 @@ document.addEventListener('click', (el) => {
 
         case "copy-AIO":
             CopyAIO();
+            break;
+
+        case "install-apk":
+            installAPK();
+            break;
+
+        case "choose-apk":
+            document.getElementById("apk-input").click();
             break;
             
         case "connectButton":
