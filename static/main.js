@@ -14,7 +14,7 @@ async function connectUsb() {
         adb = await webusb.connectAdb("host::");
     } catch (e) {
         err.innerText =
-            'Error. Hit "allow" if prompted on Quest, then try again. If this persists more than 4 times, try: \n-Unplug / Plug-in Quest, \n-toggle USB debugging, \n-reload browser, \n-close other ADB programs (SideQuest), \n-Check that adb.exe is not running, \n-restart Quest, \n-restart PC, \n-try another cable, \n-try amother port.';
+            'Error. Hit "allow" if prompted on Quest, then try again. If this persists more than 4 times, try: \n-Unplug / Plug-in Quest, \n-Toggle USB debugging, \n-Reload browser, \n-Close other ADB programs (SideQuest), \n-Check that adb.exe is not running, \n-Restart Quest, \n-Restart PC, \n-Try another cable, \n-Try amother port, \n-Check you are on a chromium browser, \nCheck you are using https, not http.';
     }
     if (adb != null) {
         document.getElementById("buttons").style.display = "block";
@@ -22,7 +22,7 @@ async function connectUsb() {
             "Success. If menu does not appear, reload page and try again.";
     } else {
         err.innerText =
-            'Error. Hit "allow" if prompted on Quest, then try again. If this persists more than 4 times, try: \n-Unplug / Plug-in Quest, \n-toggle USB debugging, \n-reload browser, \n-close other ADB programs (SideQuest), \n-Check that adb.exe is not running, \n-restart Quest, \n-restart PC, \n-try another cable, \n-try amother port.';
+            'Error. Hit "allow" if prompted on Quest, then try again. If this persists more than 4 times, try: \n-Unplug / Plug-in Quest, \n-Toggle USB debugging, \n-Reload browser, \n-Close other ADB programs (SideQuest), \n-Check that adb.exe is not running, \n-Restart Quest, \n-Restart PC, \n-Try another cable, \n-Try amother port, \n-Check you are on a chromium browser, \nCheck you are using https, not http.';
     }
 }
 
