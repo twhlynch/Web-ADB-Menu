@@ -19,6 +19,12 @@
         gtag('config', 'G-BDS57RBQ3Q');
     </script>
     <style>
+
+        *::-webkit-scrollbar {
+            display: none;
+        }
+
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             font-size: 16px;
@@ -78,12 +84,73 @@
         .clicked {
             background-color: #555;
         }
+
+        #help {
+            width: 2em;
+            height: 2em;
+            margin: 0.5em 1em;
+            cursor: pointer;
+        }
+
+        #helpMenu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #333;
+            color: #fff;
+            display: none;
+            z-index: 100;
+            overflow-y: scroll;
+            max-width: 100%;
+            width: 100%;
+            height: 100%;
+        }
+
+        #x {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0.5em 1em;
+            cursor: pointer;
+        }
+
+        #helpMenu p, #helpMenu a {
+            font-size: 0.8em;
+            font-weight: 300;
+        }
+
+        h2 {
+            font-size: 1em;
+            font-weight: 700;
+            margin: 0.5em 0;
+            padding: 0.5em 0;
+        }
+
+        #helpMenu > div {
+            display: flex;
+            padding: 1em;
+            margin-top: 1em;
+            flex-direction: column;
+            align-items: left;
+            justify-content: center;
+        }
+
+        #helpMenu a {
+            padding: 0.5em 1em;
+            display: block;
+            text-decoration: none;
+            color: #afb5e9;
+            transition: all 0.1s linear;
+        }
+
     </style>
 </head>
 <body>
     <header>
         <h1>Hz Commands</h1>
-        <p>Click to copy!</p>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" id="help">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+        </svg>
     </header>
     <hr>
     <main>
@@ -152,6 +219,35 @@
     <div><span>Hardware boost</span><br>
     <code>adb shell setprop debug.oculus.cpuLevel 5 && adb shell setprop debug.oculus.gpuLevel 5</code><br></div>
     </main>
+    <div id="helpMenu">
+        <div>
+        <div id="x">x</div>
+        <h2>Usage</h2>
+        <p>Find and click the command you want to copy it.</p>
+        <h2>SideQuest</h2>
+        <p>Open SideQuest with your headset connected.</p>
+        <p>Click the top right button that looks like an arrow in a box.</p>
+        <p>Paste the command.</p>
+        <p>Click "RUN COMMAND".</p>
+        <h2>Developer Hub</h2>
+        <p>Open Meta Quest Developer Hub with your headset connected.</p>
+        <p>Click "Add command".</p>
+        <p>Paste the command into the command input and set the other info to whatever.</p>
+        <p>Run the command.</p>
+        <h2>ADB Shell</h2>
+        <p>Open a terminal window in the directory with the SDK with your headset connected.</p>
+        <p>Run ".\adb devices".</p>
+        <p>Paste the command into the terminal.</p>
+        <h2>After</h2>
+        <p>Sleep your headset.</p>
+        <p>Wake your headset.</p>
+        <p>Sometimes you may need to open a game to see an effect.</p>
+        <h2>Links</h2>
+        <a href="https://sidequestvr.com/setup-howto">SideQuest</a>
+        <a href="https://developer.oculus.com/meta-quest-developer-hub">Quest Dev Hub</a>
+        <a href="https://developer.android.com/tools/releases/platform-tools#downloads">ADB Shell (Android SDK)</a>
+        </div>
+    </div>
     <script>
         let codeElements = document.querySelectorAll('code');
         codeElements.forEach((codeElement) => {
@@ -164,6 +260,16 @@
                     codeElement.classList.remove('clicked');
                 }, 200);
             });
+        });
+
+        let help = document.getElementById('help');
+        let helpMenu = document.getElementById('helpMenu');
+        help.addEventListener('click', () => {
+            helpMenu.style.display = 'flex';
+        });
+        let x = document.getElementById('x');
+        x.addEventListener('click', () => {
+            helpMenu.style.display = 'none';
         });
     </script>
 </body>
