@@ -172,7 +172,7 @@ document.addEventListener('click', (el) => {
             break;
 
         case "ko-fiButton":
-            window.open("https://ko-fi.com/dotindex");
+            window.open("https://twhlynch.me/Web-ADB-Menu/hz");
             break;
             
         case "custom-hz":
