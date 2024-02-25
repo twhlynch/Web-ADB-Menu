@@ -145,6 +145,27 @@ async function installAPK() {
     sync = null;
 }
 
+async function corp() {
+    execute("adb shell setprop debug.oculus.refreshRate 60");
+    execute("adb shell setprop debug.oculus.gpuLevel 49");
+    execute("adb shell setprop debug.oculus.cpuLevel 49");
+    execute("adb shell setprop debug.oculus.capture.width 3600");
+    execute("adb shell setprop debug.oculus.capture.height 3600");
+    execute("adb shell setprop debug.oculus.capture.bitRate 30000000");
+    execute("adb shell setprop debug.oculus.adaclocks.force 5");
+    execute("adb shell setprop debug.oculus.capture.fps 20");
+    execute("adb shell setprop debug.oculus.eyeFovDown 49");
+    execute("adb shell setprop debug.oculus.eyeFovUp 48");
+    execute("adb shell setprop debug.oculus.eyeFovOutward 50");
+    execute("adb shell setprop debug.oculus.eyeFovInward 50");
+    execute("adb shell setprop debug.oculus.foveation.dynamic -1");
+    execute("adb shell setprop debug.oculus.foveation.level -1");
+    execute("adb shell setprop debug.oculus.ro.ovr.default.object_tracking.cpus 3");
+    execute("adb shell setprop debug.oculus.persist.ovr.foreground.cpus 3");
+    execute("adb shell setprop debug.ovr.enable_downclock_cpu_and_ram 3");
+    execute("adb shell setprop debug.persist.ovr.enable_downclock_gpu 3");
+}
+
 document.addEventListener('click', (el) => {
     switch (el.target.id) {
         case "set-AIO":
@@ -241,6 +262,10 @@ document.addEventListener('click', (el) => {
         
         case "check-state":
             check();
+            break;
+
+        case "corp":
+            corp();
             break;
 
         default:
