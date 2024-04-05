@@ -188,6 +188,10 @@ document.addEventListener('click', (el) => {
             connectUsb();
             break;
 
+        case "showButton":
+            document.getElementById("buttons").style.display = "block";
+            break;
+
         case "discordButton":
             window.open("https://discord.gg/GSWSahAmVU");
             break;

@@ -68,17 +68,25 @@ a {
 button:hover {
     background-color: #022;
 }
+#connectBtns {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
 #connectButton:hover {
-    border-color: #070;
-    color: #070;
+    border-color: #00aa22;
+    color: #00aa22;
 }
 #ko-fiButton:hover {
-    border-color: #770;
-    color: #770;
+    border-color: #777;
+    color: #777;
 }
 #discordButton:hover {
-    border-color: #70b;
-    color: #70b;
+    border-color: #5865F2;
+    color: #5865F2;
+}
+#showButton:hover {
+    border-color: #ccc;
+    color: #ccc;
 }
 *::-webkit-scrollbar {
     display: none;
