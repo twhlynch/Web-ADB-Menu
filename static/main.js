@@ -264,6 +264,10 @@ document.addEventListener('click', (el) => {
             execute('setprop debug.oculus.forceChroma 1');
             break;
         
+        case "chromatic-aberration-reset":
+            execute('setprop debug.oculus.forceChroma 0');
+            break;
+            
         case "check-state":
             check();
             break;
